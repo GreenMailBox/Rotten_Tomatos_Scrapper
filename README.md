@@ -2,6 +2,12 @@
 
 This Python script scrapes data about movies from Rotten Tomatoes and adds it to a CSV file. It retrieves information such as audience score, critic score, critics reviews, audience reviews, and streaming platforms.
 
+This scrapper is intended to be used; after the TMDB horror movie scrapper, and the IMDB_Movie_Info_Scrapper
+
+#Please note that the use of this scrapper will likely get your IP address blocked from Rotten tomatoes
+#this is due to the scraper isn't implementing any form of delay etc; and will send alot of requests to their server and they will likely block you for it
+#this is your warning, you maybe able to implement some delay etc and prevent yourself from being blocked
+
 ## Features
 
 - Scrapes movie data from Rotten Tomatoes
@@ -36,9 +42,7 @@ Immaculate,5.9,20476,Horror,88%,75%,450 Reviews,30,000+ Ratings,Netflix
 
 
 ## Contributors
-
-- John Doe (@john-doe)
-- Jane Smith (@jane-smith)
+Joshua Hemingway
 
 ## License
 
