@@ -1,5 +1,6 @@
-#Joshua Hemingway
-#5/5/2024
+#please Note that the use of this scrapper will likely get your IP address blocked from Rotten tomatoes
+#this is due to the scraper isn't implementing any form of delay etc; and will send alot of requests to there server and they will likely block you for it
+#this is your warning, you maybe able to implement some delay etc and prevent yourself from being blocked
 
 import requests
 from bs4 import BeautifulSoup
@@ -7,8 +8,11 @@ import csv
 import os
 
 def scrape_rotten_tomatoes(movie_title):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+    }
     url = f"https://www.rottentomatoes.com/m/{movie_title.replace(' ', '_').replace(':', '').replace(',', '').replace('.', '')}"
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
 
     # Find audience score
@@ -34,17 +38,23 @@ def scrape_rotten_tomatoes(movie_title):
 
     return audience_score, critic_score, critics_reviews, audience_reviews, ', '.join(streaming_platforms)
 
+# Prompt user for input CSV file name
+input_csv_file = input("Enter the name of the input CSV file (e.g., 'movies.csv'): ")
+
+# Prompt user for output CSV file name
+output_csv_file = input("Enter the name of the output CSV file (e.g., 'movie_data.csv'): ")
+
 # Read movie titles, IMDB ratings, IMDB votes, and genres from the original CSV file
 existing_titles = set()
-if os.path.isfile('movie_data.csv'):
-    with open('movie_data.csv', 'r', newline='', encoding='utf-8') as existing_csv:
+if os.path.isfile(output_csv_file):
+    with open(output_csv_file, 'r', newline='', encoding='utf-8') as existing_csv:
         reader = csv.reader(existing_csv)
         next(reader)  # Skip header row
         for row in reader:
             existing_titles.add(row[0])  # Add movie title to the set of existing titles
 
 movie_data = []
-with open('movies.csv', 'r', newline='', encoding='utf-8') as csvfile:
+with open(input_csv_file, 'r', newline='', encoding='utf-8') as csvfile:
     reader = csv.reader(csvfile)
     next(reader)  # Skip header row
     for row in reader:
@@ -55,7 +65,7 @@ with open('movies.csv', 'r', newline='', encoding='utf-8') as csvfile:
             print(f"Skipping {title} because it already exists in the CSV file.")
 
 # Scraping Rotten Tomatoes and writing to a new CSV file
-with open('movie_data.csv', 'a', newline='', encoding='utf-8') as output_csv:
+with open(output_csv_file, 'a', newline='', encoding='utf-8') as output_csv:
     writer = csv.writer(output_csv)
     for title, imdb_rating, imdb_votes, genres in movie_data:
         print(f"Processing: {title}")
