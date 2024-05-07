@@ -5,7 +5,7 @@ This Python script scrapes data about movies from Rotten Tomatoes and adds it to
 This scrapper is intended to be used; after the TMDB horror movie scrapper, and the IMDB_Movie_Info_Scrapper
 
 #Please note that the use of this scrapper will likely get your IP address blocked from Rotten tomatoes
-#this is due to the scraper isn't implementing any form of delay etc; and will send alot of requests to their server and they will likely block you for it
+#this is due to the scraper isn't implementing any form of delay etc; and will send alot of requests to their server at once and they will likely block you for it
 #this is your warning, you maybe able to implement some delay etc and prevent yourself from being blocked
 
 ## Features
